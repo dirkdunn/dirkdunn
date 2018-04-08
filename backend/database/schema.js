@@ -1,17 +1,29 @@
 const makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
+const resolvers = require('./resolvers');
 const typeDefs = `
 type Query {
-  testString: String
+  getUserById(id: ID): User
+  getUserByPostId(id: ID): User
+  getPostByCommentId(id: ID): Post
+  getAllUsers(
+    id: ID,
+    first_name: String,
+    last_name: String,
+    email: String,
+    password: String,
+    avatar_url: String,
+    website: String): [User]
 }
 
 type User {
-  id: ID
+  id: Int
   first_name: String
   last_name: String
   email: String
   password: String
   avatar_url: String
   website: String
+  posts: [Post]
 }
 
 type Post {
@@ -21,6 +33,8 @@ type Post {
   user_id: Int
   likes: Int
   post_category: String
+  comments: [Comment]
+  user: User
 }
 
 type Comment {
@@ -29,9 +43,11 @@ type Comment {
   user_id: Int
   post_id: Int
   likes: Int
+  post: Post
+  user: User
 }
 `;
 
-const schema = makeExecutableSchema({ typeDefs });
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 module.exports =  schema;

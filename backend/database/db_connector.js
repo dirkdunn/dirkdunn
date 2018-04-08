@@ -2,7 +2,6 @@ require('dotenv').config({
   path: __dirname + '/../.env'
 });
 
-console.log(process.env.MYSQL_DATABASE_NAME);
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(
   process.env.MYSQL_DATABASE_NAME,
@@ -19,5 +18,9 @@ const sequelize = new Sequelize(
     idle: 10000
   }
 });
+
+require('./models/User')(Sequelize,sequelize);
+require('./models/Post')(Sequelize,sequelize);
+require('./models/Comment')(Sequelize,sequelize);
 
 module.exports = { Sequelize, sequelize };

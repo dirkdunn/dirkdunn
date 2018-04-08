@@ -1,8 +1,8 @@
 const { Sequelize, sequelize } = require('./db_connector'),
   casual = require('casual'),
-  UserModel = require('./models/User'),
-  PostModel = require('./models/Post'),
-  CommentModel = require('./models/Comment');
+  UserModel = sequelize.models.User;
+  PostModel = sequelize.models.Post;
+  CommentModel = sequelize.models.Comment;
 
 function createUsers(times){
   times = times || 100;
